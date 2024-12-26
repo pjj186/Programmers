@@ -1,21 +1,11 @@
 const fs = require('fs');
 const [_, card, __, targetCard] = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const obj = {};
-let answer = "";
+const countMap = new Map();
 
-targetCard.split(" ").forEach((el) => {
-  obj[el] = 0;
-})
+card.split(" ").forEach(num => {
+    countMap.set(num, (countMap.get(num) || 0) + 1);
+});
 
-card.split(" ").forEach((el) => {
-  if(Object.hasOwn(obj, el)) {
-    obj[el] += 1;
-  }
-})
-
-targetCard.split(" ").forEach((el) => {
-  answer += obj[el] + " ";
-})
-
-console.log(answer);
+const result = targetCard.split(" ").map(num => countMap.get(num) || 0);
+console.log(result.join(" "));

@@ -1,20 +1,19 @@
 const fs = require('fs');
 const [n, ...input] = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const arr = [];
-let answer = "";
+const members = [];
 
-for(let i = 0; i < n; i++) {
-    let [age, name] = input[i].split(' ');
-    arr.push([age, name]);
+for (let i = 0; i < Number(n); i++) {
+  let [age, name] = input[i].split(" ");
+  members.push({ age: Number(age), name, index: i });
 }
 
-arr.sort((a, b) => {
-    return a[0] - b[0];
-})
+members.sort((a, b) => {
+  if(a.age !== b.age) {
+    return a.age - b.age;
+  }
+  return a.index - b.index;
+});
 
-for (let i = 0; i < n; i++) {
-  answer += arr[i][0] + " " + arr[i][1] + '\n';
-}
-
-console.log(answer);
+const result = members.map(member => `${member.age} ${member.name}`).join('\n');
+console.log(result);
